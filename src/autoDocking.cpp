@@ -58,6 +58,9 @@ int main(int argc, char** argv)
   {
     ros::spinOnce(); 
     
+    //report robot motion to the cml window
+    printf("Mode:%c",robotMotion);
+    
     //Looking for docking station if docking station is not found
     if (!DockingStationFound) {
       geometry_msgs::TwistPtr cmd(new geometry_msgs::Twist());
@@ -94,7 +97,7 @@ int main(int argc, char** argv)
       cmd_vel_pub.publish(cmd);
     }
     
-    if (SignalLostCounter>70){
+    if (SignalLostCounter>200){
 	    DockingStationFound = false;
 	    SignalLostCounter = 0;
 	  }
