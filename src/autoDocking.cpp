@@ -90,9 +90,9 @@ int main(int argc, char** argv)
         case 'F':
         cmd->angular.z = 0;
         cmd->linear.x = -0.06;
-        default:
-        cmd->angular.z = 0;
-        cmd->linear.x = 0;
+        //default:
+        //cmd->angular.z = 0;
+        //cmd->linear.x = 0;
       }
       cmd_vel_pub.publish(cmd);
     }
