@@ -36,7 +36,7 @@ void irValueCallback(const autodocking::irResult &result)
       robotMotion = 'D';
     if(result.farLeft)
       robotMotion = 'E';
-    if(result.farRight || result.farLeft)
+    if(result.farRight && result.farLeft)
       robotMotion = 'F';
   }else{
       SignalLostCounter++;
@@ -82,10 +82,10 @@ int main(int argc, char** argv)
         cmd->angular.z = 0;
         cmd->linear.x = -0.1;
         case 'D':
-        cmd->angular.z = -0.06;
+        cmd->angular.z = -0.1;
         cmd->linear.x = -0.06;
         case 'E':
-        cmd->angular.z = 0.06;
+        cmd->angular.z = 0.1;
         cmd->linear.x = -0.06;
         case 'F':
         cmd->angular.z = 0;
