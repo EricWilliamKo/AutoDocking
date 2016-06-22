@@ -11,12 +11,12 @@ int SignalLostCounter = 0;
 
 char robotMotion = 'G';
 /*
-Mode A Fast turn Right
-Mode B Fast turn Left
-Mode C Fast go foward
-Mode D Slow turn Right
-Mode E Slow turn Left
-Mode F Slow go foward
+Mode A Slow turn Right
+Mode B Slow turn Left
+Mode C Slow go foward
+Mode D Fast turn Right
+Mode E Fast turn Left
+Mode F Fast go foward
 */
 void irValueCallback(const autodocking::irResult &result)
 {
@@ -74,27 +74,27 @@ int main(int argc, char** argv)
       switch(robotMotion){
         case 'A':
         cmd->angular.z = -0.1;
-        cmd->linear.x = -0.1;
+        cmd->linear.x = -0.06;
         break;
         case 'B':
         cmd->angular.z = 0.1;
-        cmd->linear.x = -0.1;
+        cmd->linear.x = -0.06;
         break;
         case 'C':
         cmd->angular.z = 0;
-        cmd->linear.x = -0.1;
+        cmd->linear.x = -0.06;
         break;
         case 'D':
-        cmd->angular.z = -0.1;
-        cmd->linear.x = -0.06;
+        cmd->angular.z = -0.2;
+        cmd->linear.x = -0.1;
         break;
         case 'E':
-        cmd->angular.z = 0.1;
-        cmd->linear.x = -0.06;
+        cmd->angular.z = 0.2;
+        cmd->linear.x = -0.1;
         break;
         case 'F':
         cmd->angular.z = 0;
-        cmd->linear.x = -0.06;
+        cmd->linear.x = -0.1;
         break;
         //default:
         //cmd->angular.z = 0;
