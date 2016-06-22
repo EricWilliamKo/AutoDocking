@@ -9,6 +9,8 @@ ros::Subscriber irValue_sub;
 bool DockingStationFound = false;
 int SignalLostCounter = 0;
 
+autodocking::irResult result;
+
 char robotMotion = 'G';
 /*
 Mode A Slow turn Right
@@ -18,9 +20,34 @@ Mode D Fast turn Right
 Mode E Fast turn Left
 Mode F Fast go foward
 */
-void irValueCallback(const autodocking::irResult &result)
+void irValueCallback(const autodocking::irResult &queue)
 {
-  if(result.nearRight || result.nearLeft){
+  if(queue.farLeft)
+  result.farLeft = true;
+  if(queue.farRight)
+  result.farRight = true;
+  if(queue.nearLeft)
+  result.nearLeft = true;
+  if(queue.nearRight)
+  result.nearRight = true;
+}
+
+int main(int argc, char** argv)
+{
+  ros::init(argc, argv, "IR_autoDocking");
+
+  ros::NodeHandle nh;
+  
+  cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 50);
+  irValue_sub = nh.subscribe("/irCode", 10, irValueCallback);
+
+  ros::Rate r(50);
+
+  while (ros::ok())
+  {
+    ros::spinOnce(); 
+    
+    if(result.nearRight || result.nearLeft){
     SignalLostCounter = 0;
     DockingStationFound = true;
     if(result.nearRight)
@@ -41,22 +68,6 @@ void irValueCallback(const autodocking::irResult &result)
   }else{
       SignalLostCounter++;
     }
-}
-
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "IR_autoDocking");
-
-  ros::NodeHandle nh;
-  
-  cmd_vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 50);
-  irValue_sub = nh.subscribe("/irCode", 10, irValueCallback);
-
-  ros::Rate r(50);
-
-  while (ros::ok())
-  {
-    ros::spinOnce(); 
     
     //report robot motion to the cml window
     printf("Mode:%c",robotMotion);
@@ -104,10 +115,16 @@ int main(int argc, char** argv)
       cmd_vel_pub.publish(cmd);
     }
     
-    if (SignalLostCounter>200){
+    if (SignalLostCounter>40){
 	    DockingStationFound = false;
 	    SignalLostCounter = 0;
 	  }
+    
+    result.farLeft = false;
+    result.farRight = false;
+    result.nearLeft = false;
+    result.nearRight = false;
+    
     r.sleep();
   }
   return 0;
