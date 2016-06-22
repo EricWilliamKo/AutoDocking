@@ -64,7 +64,7 @@ int main(int argc, char** argv)
     //Looking for docking station if docking station is not found
     if (!DockingStationFound) {
       geometry_msgs::TwistPtr cmd(new geometry_msgs::Twist());
-      cmd->angular.z = 0.2; // const rotate until 
+      cmd  ->angular.z = 0.2; // const rotate until 
       cmd->linear.x = 0.0;
       cmd_vel_pub.publish(cmd);
     }
@@ -75,24 +75,31 @@ int main(int argc, char** argv)
         case 'A':
         cmd->angular.z = -0.1;
         cmd->linear.x = -0.1;
+        break;
         case 'B':
         cmd->angular.z = 0.1;
         cmd->linear.x = -0.1;
+        break;
         case 'C':
         cmd->angular.z = 0;
         cmd->linear.x = -0.1;
+        break;
         case 'D':
         cmd->angular.z = -0.1;
         cmd->linear.x = -0.06;
+        break;
         case 'E':
         cmd->angular.z = 0.1;
         cmd->linear.x = -0.06;
+        break;
         case 'F':
         cmd->angular.z = 0;
         cmd->linear.x = -0.06;
+        break;
         //default:
         //cmd->angular.z = 0;
         //cmd->linear.x = 0;
+        //break;
       }
       cmd_vel_pub.publish(cmd);
     }
