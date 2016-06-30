@@ -56,6 +56,8 @@ int main(int argc, char** argv)
       robotMotion = 'B';
     if(result.nearLeft && result.nearRight)
       robotMotion = 'C';
+    if(result.nearLeft && result.farRight)
+      robotMotion = 'G';
   }else if(result.farRight || result.farLeft){
     SignalLostCounter = 0;
     DockingStationFound = true;
@@ -92,7 +94,7 @@ int main(int argc, char** argv)
         cmd->linear.x = -0.06;
         break;
         case 'C':
-        cmd->angular.z = 0;
+        cmd->angular.z = -0.04;
         cmd->linear.x = -0.06;
         break;
         case 'D':
@@ -104,8 +106,12 @@ int main(int argc, char** argv)
         cmd->linear.x = -0.1;
         break;
         case 'F':
-        cmd->angular.z = 0;
+        cmd->angular.z = 0.07;
         cmd->linear.x = -0.1;
+        break;
+        case 'G':
+        cmd->angular.z = 0;
+        cmd->linear.x = -0.05;
         break;
         //default:
         //cmd->angular.z = 0;
