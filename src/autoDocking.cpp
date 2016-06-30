@@ -113,10 +113,6 @@ int main(int argc, char** argv)
         cmd->angular.z = 0;
         cmd->linear.x = -0.05;
         break;
-        //default:
-        //cmd->angular.z = 0;
-        //cmd->linear.x = 0;
-        //break;
       }
       cmd_vel_pub.publish(cmd);
     }
